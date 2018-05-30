@@ -45,21 +45,21 @@ module SmartSession
     private
     
     def get_session(env, sid)
-      ActiveRecord::Base.silence do
+      #ActiveRecord::Base.silence do
         sid ||= generate_sid
         session = find_session(sid)
         env[SESSION_RECORD_KEY] = session
         [sid, unmarshalize(session.data)]
-      end
+      #end
     end
 
     def set_session(env, sid, session_data, options)
-      ActiveRecord::Base.silence do
+      #ActiveRecord::Base.silence do
         record = get_session_model(env, sid)
 
         data, session = save_session(record, session_data)
         env[SESSION_RECORD_KEY] = session
-      end
+      #end
 
       return sid
     end
