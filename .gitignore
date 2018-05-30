@@ -1,1 +1,4 @@
 test/debug.log
+.idea
+Gemfile.lock
+smart_session_test.sqlite3.db

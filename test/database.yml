@@ -13,3 +13,10 @@ postgres:
   :adapter: postgresql
   :username: smart_session
   :database: smart_session
+
+mssql:
+  :adapter: sqlserver
+  :host: 10.37.129.5
+  :username: pw_prod_user
+  :password: pw_prod_pass
+  :database: smart_session

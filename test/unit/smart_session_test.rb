@@ -30,6 +30,7 @@ class SmartSessionTest < ActiveSupport::TestCase
   end
   # Replace this with your real tests.
   def setup
+    RAILS_DEFAULT_LOGGER.info("#{'='*80}\nRunning test #{@method_name}\n#{'='*80}")
     @env = { Rack::Session::Abstract::ENV_SESSION_KEY => '123456',  Rack::Session::Abstract::ENV_SESSION_OPTIONS_KEY => Rack::Session::Abstract::ID::DEFAULT_OPTIONS}
     SmartSessionApp.test_proc = nil
   end  
