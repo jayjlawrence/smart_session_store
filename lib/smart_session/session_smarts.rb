@@ -12,7 +12,9 @@ module SmartSession
     def exception_is_unique_index_violation(e)
       e =~ /Duplicate entry/ || #mysql
       e =~ /duplicate key value violates unique constraint/ || #postgres
-      e =~ /column session_id is not unique/ #sqlite3
+      e =~ /column session_id is not unique/ || #sqlite3
+      e =~ /UNIQUE constraint failed/ || #sqlite3
+      e =~ /Cannot insert duplicate key row in object/ # mssql
     end
     
     def save_session(session, data)

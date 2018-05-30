@@ -35,6 +35,9 @@ module SmartSession
         when :sqlite
           require 'smart_session/sqlite'
           SqliteSession
+        when :mssql
+          require 'smart_session/mssql'
+          MssqlSession
         else
           raise ArgumentError, "Unknown session class #{symbol_or_class}"
         end
