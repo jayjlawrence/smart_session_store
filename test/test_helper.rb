@@ -39,6 +39,16 @@ end
 
 
 RAILS_DEFAULT_LOGGER = ActiveRecord::Base.logger = Logger.new(File.dirname(__FILE__) + "/debug.log")
+# RAILS_DEFAULT_LOGGER.level=ActiveSupport::BufferedLogger::Severity::DEBUG
+
+require 'active_record_query_trace'
+require 'active_support/backtrace_cleaner'
+ActiveRecordQueryTrace.enabled = true
+ActiveRecordQueryTrace.backtrace_cleaner.add_silencer { |line|  line !~ /smart_session/ }
+ActiveRecordQueryTrace.level = :cleaner # :app, :rails, :full
+ActiveRecordQueryTrace.ignore_cached_queries = true
+ActiveRecordQueryTrace.lines = 15
+ActiveRecordQueryTrace.logger = ActiveRecord::Base.logger
 
 database_type = ENV['DATABASE'] || 'mysql2'
 
