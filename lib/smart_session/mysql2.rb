@@ -69,8 +69,6 @@ module SmartSession
       end
       
       def find(conditions)
-        connection = session_connection
-        # connection.query_with_result = true
         result = query("SELECT session_id, data,id #{  SmartSession::SqlSession.locking_enabled? ? ',lock_version ' : ''} FROM #{SmartSession::SqlSession.table_name} WHERE " + conditions)
          my_session = nil
         # each is used below, as other methods barf on my 64bit linux machine
