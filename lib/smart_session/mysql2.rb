@@ -45,6 +45,7 @@ module SmartSession
       def query(sql)
         connection = session_connection
         begin
+          ActiveRecord::Base.logger.debug {'SMART_SESSION > '+sql}
           connection.query sql
         rescue Exception => e
           message = "#{e.class.name}: #{e.message}: #{sql}"
