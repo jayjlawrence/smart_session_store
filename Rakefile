@@ -9,12 +9,12 @@ task :test => ['test:default', 'test:custom']
 
 Rake::TestTask.new('test:custom') do |t|
   t.libs << 'lib'
-  t.pattern = 'test/unit/custom_table_name_test.rb'
+  t.test_files = ['test/unit/custom_table_name_test.rb']
   t.verbose = true
 end
 
 Rake::TestTask.new('test:default') do |t|
   t.libs << 'lib'
-  t.pattern = 'test/unit/smart_session_test.rb'
+  t.test_files = ['test/unit/smart_session_test.rb']
   t.verbose = true
 end

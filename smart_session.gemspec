@@ -13,11 +13,15 @@ Gem::Specification.new do |gem|
   gem.homepage      = ""
   gem.add_dependency "actionpack", '>=3.0.0', '< 4.0.0'
   gem.add_dependency "activerecord", '>=3.0.0', '< 4.0.0'
-  gem.add_development_dependency "mysql2"
+  gem.add_development_dependency "mysql2", "0.3.17"
   gem.add_development_dependency "sqlite3"
-  gem.add_development_dependency "pg"
+  # gem.add_development_dependency "pg"
+  gem.add_development_dependency "sqlserver"
+  gem.add_development_dependency "activerecord-sqlserver-adapter"
+  gem.add_development_dependency "tiny_tds"
   gem.add_development_dependency "mocha"
   gem.add_development_dependency "rake"
+  gem.add_development_dependency "test-unit"
   gem.add_development_dependency "active_record_query_trace"
 
   gem.files         = `git ls-files`.split($/)
