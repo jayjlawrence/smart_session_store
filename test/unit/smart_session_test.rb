@@ -148,7 +148,7 @@ class SmartSessionTest < ActiveSupport::TestCase
       base_session.send :load!
   
       assert_equal 0, @env[SmartSession::Store::SESSION_RECORD_KEY].lock_version
-      SmartSession::Store.session_class.expects(:update_session_optimistically).never
+      # SmartSession::Store.session_class.expects(:update_session_optimistically).never
       SmartSessionApp.send :set_session, @env, '123456', base_session.to_hash, {}
     end
   end
