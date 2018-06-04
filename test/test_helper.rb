@@ -45,7 +45,7 @@ require 'active_record_query_trace'
 require 'active_support/backtrace_cleaner'
 ActiveRecordQueryTrace.enabled = true
 ActiveRecordQueryTrace.backtrace_cleaner.add_silencer { |line|  line !~ /smart_session/ }
-ActiveRecordQueryTrace.level = :cleaner # :app, :rails, :full
+ActiveRecordQueryTrace.scope = :cleaner # :app, :rails, :full
 ActiveRecordQueryTrace.ignore_cached_queries = true
 ActiveRecordQueryTrace.lines = 15
 ActiveRecordQueryTrace.logger = ActiveRecord::Base.logger

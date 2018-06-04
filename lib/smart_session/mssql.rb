@@ -3,7 +3,8 @@
 # +update_session+ and +destroy+ constitute the interface to class
 # +SmartSession+.
 module SmartSession
-  class MssqlSession < ActiveRecord::Base
+  class MssqlSession < ::ActiveRecord::Base
+
     self.table_name = 'sessions'
     # this class should not be reloaded
     def self.reloadable?

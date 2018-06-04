@@ -5,3 +5,4 @@ end
 require 'smart_session/session_smarts'
 require 'smart_session/sql_session'
 require 'smart_session/store'
+require 'smart_session/log_subscriber'
