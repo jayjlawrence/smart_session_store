@@ -45,26 +45,48 @@ module SmartSession
         @@session_class = symbol_or_class
       end
     end
+
+    attr_accessor :silence_logs
+
+    def initialize(app, options={})
+      @silence_logs=options.has_key?(:silence_logs) ? options[:silence_logs]==true : true
+      super
+    end
     private
     
     def get_session(env, sid)
-      #ActiveRecord::Base.silence do
-        sid ||= generate_sid
-        session = find_session(sid)
-        env[SESSION_RECORD_KEY] = session
-        [sid, unmarshalize(session.data)]
-      #end
+      if silence_logs
+        ActiveRecord::Base.silence do
+          _get_session(env,sid)
+        end
+      else
+        _get_session(env,sid)
+      end
+    end
+
+    def _get_session(env,sid)
+      sid ||= generate_sid
+      session = find_session(sid)
+      env[SESSION_RECORD_KEY] = session
+      [sid, unmarshalize(session.data)]
     end
 
     def set_session(env, sid, session_data, options)
-      #ActiveRecord::Base.silence do
-        record = get_session_model(env, sid)
-
-        data, session = save_session(record, session_data)
-        env[SESSION_RECORD_KEY] = session
-      #end
+      if silence_logs
+        ActiveRecord::Base.silence do
+          _set_session(env, sid, session_data, options)
+        end
+      else
+        _set_session(env, sid, session_data, options)
+      end
 
       return sid
+    end
+
+    def _set_session(env, sid, session_data, options)
+      record = get_session_model(env, sid)
+      _, session = save_session(record, session_data)
+      env[SESSION_RECORD_KEY] = session
     end
 
     def get_session_model(env, sid)
