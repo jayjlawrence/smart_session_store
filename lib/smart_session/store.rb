@@ -20,6 +20,8 @@ module SmartSession
 
     cattr_accessor :session_class
     @@session_class = SmartSession::SqlSession
+    cattr_accessor :silence_log
+    @@silence_log=true
 
     SESSION_RECORD_KEY = 'rack.session.record'.freeze
       
@@ -49,13 +51,12 @@ module SmartSession
     attr_accessor :silence_logs
 
     def initialize(app, options={})
-      @silence_logs=options.has_key?(:silence_logs) ? options[:silence_logs]==true : true
       super
     end
     private
     
     def get_session(env, sid)
-      if silence_logs
+      if @@silence_log
         ActiveRecord::Base.silence do
           _get_session(env,sid)
         end
@@ -72,7 +73,7 @@ module SmartSession
     end
 
     def set_session(env, sid, session_data, options)
-      if silence_logs
+      if @@silence_log
         ActiveRecord::Base.silence do
           _set_session(env, sid, session_data, options)
         end
@@ -98,16 +99,37 @@ module SmartSession
     end
     
     def find_session(id)
+      if @@silence_log
+        ActiveRecord::Base.silence do
+          _find_session(id)
+        end
+      else
+        _find_session(id)
+      end
+    end
+
+    def _find_session(id)
       @@session_class.find_session(id) ||
         @@session_class.create_session(id, marshalize({}))
     end
     
     def destroy_session(env, sid, options)
+      if @@silence_log
+        ActiveRecord::Base.silence do
+          _destroy_session(env, sid, options)
+        end
+      else
+        _destroy_session(env, sid, options)
+      end
+    end
+
+    def _destroy_session(env, sid, options)
       if sid = current_session_id(env)
         get_session_model(env, sid).destroy
         env[SESSION_RECORD_KEY] = nil
       end
       generate_sid unless options[:drop]
     end
+
   end
 end
