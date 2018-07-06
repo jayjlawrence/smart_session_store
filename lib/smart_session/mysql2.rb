@@ -39,7 +39,8 @@ module SmartSession
       end
       
       def quote_escape(arg)
-        quote escape(arg)
+        quote arg
+        # quote escape(arg) # escape does not exist in the JDBC driver so doing this short term
       end
       
       def query(sql)
