@@ -5,7 +5,6 @@
 module SmartSession 
   class Mysql2Session < ::ActiveRecord::Base
 
-
     self.table_name = 'sessions'
     # this class should not be reloaded
     def self.reloadable?
